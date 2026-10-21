@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice Notepad</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="card">
+    <h1>🎤 Voice Notepad</h1>
+    <p class="subtitle">Press Start and speak. Your words appear below.</p>
+
+    <div class="buttons">
+      <button id="startBtn" class="start">Start</button>
+      <button id="stopBtn" class="stop" disabled>Stop</button>
+    </div>
+
+    <p id="status" class="status">Ready</p>
+
+    <textarea id="notes" placeholder="Your words will appear here. You can also type or edit."></textarea>
+    <p id="interim" class="interim"></p>
+
+    <div class="footer">
+      <span id="wordCount">0 words</span>
+      <div>
+        <button id="copyBtn" class="small">Copy</button>
+        <button id="clearBtn" class="small danger">Clear</button>
+      </div>
+    </div>
+
+    <div class="help">
+      <strong>Voice commands</strong> (say only the command):<br>
+      "clear" • "copy" • "new line" • "stop"
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
