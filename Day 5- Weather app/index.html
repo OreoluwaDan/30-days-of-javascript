@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather</title>
+  <meta name="description" content="Check the current weather and a 5-day forecast for any city." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <p class="brand">Weather</p>
+      <div class="unit-switch" role="group" aria-label="Temperature unit">
+        <button type="button" data-unit="c" aria-pressed="true">°C</button>
+        <button type="button" data-unit="f" aria-pressed="false">°F</button>
+      </div>
+    </header>
+
+    <h1 class="headline">Any city.<br />Right now.</h1>
+
+    <form id="search-form" class="search" role="search" novalidate>
+      <label class="sr-only" for="city-input">City name</label>
+      <div class="search-field">
+        <span class="field-icon" data-icon="pin"></span>
+        <input id="city-input" type="text" placeholder="Search a city" autocomplete="off" maxlength="60" />
+      </div>
+      <button type="submit" id="search-btn" class="go-btn" aria-label="Search">
+        <span data-icon="search"></span>
+      </button>
+    </form>
+
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+
+    <section id="weather" class="weather" hidden>
+      <article id="hero" class="hero" data-theme="clear">
+        <div class="hero-top">
+          <div class="place">
+            <h2 id="place-name" class="place-name"></h2>
+            <p id="place-sub" class="place-sub"></p>
+          </div>
+          <span id="hero-icon" class="hero-icon"></span>
+        </div>
+        <p id="temp" class="temp"></p>
+        <p id="condition" class="condition"></p>
+      </article>
+
+      <h3 class="section-title">Right now</h3>
+      <div class="tiles">
+        <div class="tile" style="--accent: var(--green)">
+          <div class="tile-head">
+            <span class="tile-icon" data-icon="thermo"></span>
+            <p class="tile-label">Feels like</p>
+          </div>
+          <p id="feels" class="tile-value"></p>
+        </div>
+        <div class="tile" style="--accent: var(--pink)">
+          <div class="tile-head">
+            <span class="tile-icon" data-icon="drop"></span>
+            <p class="tile-label">Humidity</p>
+          </div>
+          <p id="humidity" class="tile-value"></p>
+        </div>
+        <div class="tile" style="--accent: var(--purple)">
+          <div class="tile-head">
+            <span class="tile-icon" data-icon="wind"></span>
+            <p class="tile-label">Wind</p>
+          </div>
+          <p id="wind" class="tile-value"></p>
+        </div>
+        <div class="tile" style="--accent: var(--sand)">
+          <div class="tile-head">
+            <span class="tile-icon" data-icon="updown"></span>
+            <p class="tile-label">Today high / low</p>
+          </div>
+          <p id="range" class="tile-value"></p>
+        </div>
+      </div>
+
+      <h3 class="section-title">Next 5 days</h3>
+      <ul id="forecast" class="forecast"></ul>
+    </section>
+
+    <footer class="footer">
+      <p>Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a></p>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
