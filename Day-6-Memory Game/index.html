@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pairs: a memory game</title>
+  <meta name="description" content="Flip two cards at a time and match every pair in as few moves as you can." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="layout">
+    <section class="panel" aria-labelledby="game-title">
+      <h1 id="game-title" class="title" data-text="Pairs">Pairs</h1>
+      <p class="lede">Flip two cards at a time. Match every pair in as few moves as you can.</p>
+
+      <dl class="stats">
+        <div class="stat">
+          <dt>Moves</dt>
+          <dd id="moves">0</dd>
+        </div>
+        <div class="stat">
+          <dt>Matched</dt>
+          <dd id="matched">0/8</dd>
+        </div>
+        <div class="stat">
+          <dt>Time</dt>
+          <dd id="time">0:00</dd>
+        </div>
+      </dl>
+
+      <p id="best" class="best"></p>
+
+      <div class="controls">
+        <div class="segmented" role="group" aria-label="Difficulty">
+          <button type="button" data-level="easy" aria-pressed="false">Easy</button>
+          <button type="button" data-level="medium" aria-pressed="true">Medium</button>
+          <button type="button" data-level="hard" aria-pressed="false">Hard</button>
+        </div>
+        <button type="button" id="new-game" class="btn">New game</button>
+      </div>
+    </section>
+
+    <section class="board-wrap" aria-label="Game board">
+      <div id="board" class="board"></div>
+    </section>
+  </main>
+
+  <dialog id="win-dialog" class="dialog" aria-labelledby="win-title">
+    <h2 id="win-title" class="dialog-title">All pairs found</h2>
+    <p id="win-summary" class="dialog-text"></p>
+    <p id="win-record" class="dialog-record"></p>
+    <div class="dialog-actions">
+      <button type="button" id="play-again" class="btn">Play again</button>
+      <button type="button" id="close-dialog" class="btn ghost">Close</button>
+    </div>
+  </dialog>
+
+  <p id="live" class="sr-only" aria-live="polite"></p>
+
+  <script src="script.js"></script>
+</body>
+</html>

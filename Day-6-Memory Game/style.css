@@ -1,0 +1,425 @@
+/* ---------- Tokens: a two-ink print palette ---------- */
+:root {
+  --paper: #e8e6e1;   /* newsprint */
+  --blue: #2a3fd0;    /* ink one */
+  --orange: #ff5a1f;  /* ink two */
+  --yellow: #ffd23f;  /* used once: matched cards */
+  --ink: #0e1757;     /* text: a deeper blue so it stays readable */
+  --muted: #3d4690;
+
+  --radius-card: 12px;
+  --radius-slab: 22px;
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.45;
+  padding: 28px 16px 48px;
+}
+
+/* Paper grain, like a real print */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0.22;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Layout ---------- */
+.layout {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  gap: 24px;
+}
+
+@media (min-width: 900px) {
+  body {
+    padding-top: 56px;
+  }
+
+  .layout {
+    grid-template-columns: minmax(280px, 360px) minmax(0, 520px);
+    justify-content: center;
+    align-items: start;
+    gap: 64px;
+  }
+
+  .panel {
+    position: sticky;
+    top: 40px;
+  }
+}
+
+/* ---------- Left panel ---------- */
+.title {
+  position: relative;
+  display: inline-block;
+  font-size: clamp(4.2rem, 17vw, 7.2rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  color: var(--blue);
+  margin-bottom: 14px;
+}
+
+/* A second ink, printed slightly off-register */
+.title::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(5px, 4px);
+  color: var(--orange);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.lede {
+  max-width: 30ch;
+  font-size: 1.05rem;
+  margin-bottom: 24px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: 12px;
+}
+
+.stat {
+  padding: 12px 0 10px 14px;
+}
+
+.stat + .stat {
+  border-left: 2px solid var(--ink);
+}
+
+.stat dt {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.stat dd {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.best {
+  min-height: 1.5em;
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.segmented {
+  display: flex;
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.segmented button {
+  border: none;
+  background: transparent;
+  padding: 9px 16px;
+  font-weight: 700;
+}
+
+.segmented button + button {
+  border-left: 2px solid var(--ink);
+}
+
+.segmented button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.segmented button:not([aria-pressed="true"]):hover {
+  background: rgba(14, 23, 87, 0.1);
+}
+
+.btn {
+  background: var(--orange);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  padding: 9px 18px;
+  font-weight: 800;
+  box-shadow: 0 4px 0 var(--ink);
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.btn:hover {
+  background: #ff6d38;
+}
+
+.btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 var(--ink);
+}
+
+.btn.ghost {
+  background: transparent;
+}
+
+.btn.ghost:hover {
+  background: rgba(14, 23, 87, 0.08);
+}
+
+/* ---------- Board ---------- */
+.board {
+  --gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+  padding: 14px;
+  background: var(--blue);
+  border-radius: var(--radius-slab);
+}
+
+.card {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 5 / 6;
+  padding: 0;
+  border: none;
+  background: transparent;
+  perspective: 700px;
+  border-radius: var(--radius-card);
+}
+
+.card:focus-visible {
+  outline-color: var(--paper);
+}
+
+.card-inner {
+  position: absolute;
+  inset: 0;
+  display: block;
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(0.3, 0.7, 0.3, 1);
+}
+
+.card:not(.is-flipped):not(.is-matched):hover .card-inner {
+  transform: translateY(-3px);
+}
+
+.card.is-flipped .card-inner,
+.card.is-matched .card-inner {
+  transform: rotateY(180deg);
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  display: block;
+  border-radius: var(--radius-card);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: 0 4px 0 rgba(8, 14, 70, 0.55);
+  overflow: hidden;
+}
+
+/* Back: orange with a blue halftone dot and a paper border */
+.back {
+  background:
+    radial-gradient(circle at center, var(--blue) 0 20%, transparent 22%) 0 0 / 14px 14px,
+    var(--orange);
+}
+
+.back::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 2px solid var(--paper);
+  border-radius: 7px;
+}
+
+/* Front: paper, with the glyph printed in two inks */
+.front {
+  background: var(--paper);
+  transform: rotateY(180deg);
+  padding: 14%;
+}
+
+.card.is-matched .front {
+  background: var(--yellow);
+  box-shadow: 0 1px 0 rgba(8, 14, 70, 0.55);
+}
+
+.card.is-matched .card-inner {
+  transform: rotateY(180deg) translateY(3px);
+}
+
+/* Glyph inks overprint: overlaps get darker, like riso */
+.glyph {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.glyph .o {
+  fill: var(--orange);
+  mix-blend-mode: multiply;
+}
+
+.glyph .b {
+  fill: var(--blue);
+  mix-blend-mode: multiply;
+}
+
+.glyph .bs {
+  fill: none;
+  stroke: var(--blue);
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  mix-blend-mode: multiply;
+}
+
+/* On the yellow "matched" card, overprinting turns blue muddy, so print flat instead */
+.card.is-matched .glyph .o,
+.card.is-matched .glyph .b,
+.card.is-matched .glyph .bs {
+  mix-blend-mode: normal;
+}
+
+/* ---------- Win dialog ---------- */
+.dialog {
+  margin: auto;
+  width: min(92vw, 380px);
+  padding: 28px;
+  background: var(--paper);
+  color: var(--ink);
+  border: 3px solid var(--ink);
+  border-radius: 20px;
+  box-shadow: 8px 8px 0 var(--orange);
+}
+
+.dialog::backdrop {
+  background: rgba(14, 23, 87, 0.7);
+}
+
+.dialog-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  margin-bottom: 12px;
+}
+
+.dialog-text {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.dialog-record {
+  min-height: 1.4em;
+  margin: 6px 0 22px;
+  color: var(--muted);
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 480px) {
+  body {
+    padding: 20px 12px 40px;
+  }
+
+  .board {
+    --gap: 8px;
+    padding: 10px;
+    border-radius: 18px;
+  }
+
+  .stat {
+    padding-left: 10px;
+  }
+
+  .stat dd {
+    font-size: 1.7rem;
+  }
+
+  .controls {
+    gap: 10px;
+  }
+
+  .segmented button {
+    padding: 8px 11px;
+  }
+
+  .btn {
+    padding: 8px 14px;
+  }
+
+  .back {
+    background-size: 11px 11px, auto;
+  }
+
+  .back::after {
+    inset: 5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-inner,
+  .btn {
+    transition: none;
+  }
+}
