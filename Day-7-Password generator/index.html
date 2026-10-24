@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Password generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&family=Schibsted+Grotesk:wght@500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="wrap">
+    <h1>Password generator</h1>
+    <p class="note">Made in your browser. Nothing is sent or saved.</p>
+
+    <section aria-label="Your password">
+      <output id="password" class="tape" aria-live="off"></output>
+
+      <ul class="legend" aria-hidden="true">
+        <li><i class="swatch swatch-letter"></i>Letters</li>
+        <li><i class="swatch swatch-digit"></i>Numbers</li>
+        <li><i class="swatch swatch-symbol"></i>Symbols</li>
+      </ul>
+
+      <div class="actions">
+        <button type="button" id="copy" class="btn primary">Copy</button>
+        <button type="button" id="generate" class="btn">Generate new</button>
+      </div>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+
+      <div class="strength">
+        <div id="meter" class="meter" data-level="0" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <p id="strength-text" class="strength-text"></p>
+      </div>
+    </section>
+
+    <section class="panel" aria-label="Options">
+      <div class="length-row">
+        <label for="length">Length</label>
+        <span class="length-value"><output id="length-out" for="length">16</output> characters</span>
+      </div>
+      <input id="length" type="range" min="8" max="40" value="16" />
+
+      <fieldset class="opts">
+        <legend>Include</legend>
+        <label class="opt">
+          <input type="checkbox" id="lower" checked />
+          <span class="opt-body"><span class="opt-name">Lowercase</span><span class="opt-eg">abc</span></span>
+        </label>
+        <label class="opt">
+          <input type="checkbox" id="upper" checked />
+          <span class="opt-body"><span class="opt-name">Uppercase</span><span class="opt-eg">ABC</span></span>
+        </label>
+        <label class="opt">
+          <input type="checkbox" id="numbers" checked />
+          <span class="opt-body"><span class="opt-name">Numbers</span><span class="opt-eg">123</span></span>
+        </label>
+        <label class="opt">
+          <input type="checkbox" id="symbols" checked />
+          <span class="opt-body"><span class="opt-name">Symbols</span><span class="opt-eg">!@#</span></span>
+        </label>
+      </fieldset>
+
+      <label class="check">
+        <input type="checkbox" id="lookalike" />
+        Skip look-alike characters (0 O 1 l I)
+      </label>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
