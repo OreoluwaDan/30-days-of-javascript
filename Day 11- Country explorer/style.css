@@ -1,0 +1,478 @@
+/* ---------- Tokens ---------- */
+:root {
+  --bg: #e9eef3;
+  --text: #14213d;
+  --muted: #55617a;
+  --field: #ffffff;
+  --link: #1f5fbf;
+  --line: rgba(20, 33, 61, 0.28);
+
+  --red: #d62839;
+  --blue: #1f5fbf;
+  --stripes: repeating-linear-gradient(
+    135deg,
+    #d62839 0 14px,
+    #ffffff 14px 28px,
+    #1f5fbf 28px 42px,
+    #ffffff 42px 56px
+  );
+
+  /* Stamps and postcards stay white paper in both themes */
+  --paper: #ffffff;
+  --paper-ink: #14213d;
+  --paper-muted: #55617a;
+  --paper-line: rgba(20, 33, 61, 0.18);
+}
+
+:root[data-theme="dark"] {
+  --bg: #0e1626;
+  --text: #eef2f8;
+  --muted: #a3b0c6;
+  --field: #18233a;
+  --link: #8dbbff;
+  --line: rgba(238, 242, 248, 0.35);
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.5;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 3px solid var(--link);
+  outline-offset: 3px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.airmail {
+  height: 12px;
+  background: var(--stripes);
+}
+
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 16px 56px;
+}
+
+/* ---------- Header ---------- */
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-family: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  font-size: clamp(2.8rem, 9vw, 4.4rem);
+  font-weight: 800;
+  line-height: 0.95;
+}
+
+.subtitle {
+  margin-top: 8px;
+  color: var(--muted);
+  max-width: 46ch;
+}
+
+.theme-btn {
+  flex-shrink: 0;
+  padding: 8px 18px;
+  border: 2px solid var(--text);
+  border-radius: 999px;
+  background: transparent;
+  font-weight: 700;
+}
+
+.theme-btn[aria-pressed="true"] {
+  background: var(--text);
+  color: var(--bg);
+}
+
+/* ---------- Controls ---------- */
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* On phones, search gets a full row and the two dropdowns share the next one */
+.field:first-child {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 700px) {
+  .controls {
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 18px;
+  }
+
+  .field:first-child {
+    grid-column: auto;
+  }
+}
+
+.field label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  height: 46px;
+  padding: 0 12px;
+  background: var(--field);
+  border: 2px solid var(--text);
+  border-radius: 8px;
+}
+
+.result-count {
+  min-height: 1.5em;
+  margin: 18px 0 14px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+/* ---------- Message (loading, error, empty) ---------- */
+.message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding: 26px 20px;
+  border: 2px dashed var(--line);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: 2px solid var(--text);
+  border-radius: 8px;
+  background: var(--text);
+  color: var(--bg);
+  font-weight: 700;
+}
+
+.btn:hover {
+  opacity: 0.88;
+}
+
+/* ---------- Stamps ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+  gap: 22px 18px;
+  list-style: none;
+}
+
+.stamp {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 16px 16px 14px;
+  color: var(--paper-ink);
+  text-decoration: none;
+  transition: transform 0.15s ease;
+  /* perforated edges: small circles in the page colour along each side */
+  background:
+    radial-gradient(circle at 8px 0, var(--bg) 4.5px, transparent 5px) 0 0 / 16px 8px repeat-x,
+    radial-gradient(circle at 8px 8px, var(--bg) 4.5px, transparent 5px) 0 100% / 16px 8px repeat-x,
+    radial-gradient(circle at 0 8px, var(--bg) 4.5px, transparent 5px) 0 0 / 8px 16px repeat-y,
+    radial-gradient(circle at 8px 8px, var(--bg) 4.5px, transparent 5px) 100% 0 / 8px 16px repeat-y,
+    var(--paper);
+}
+
+a.stamp:hover {
+  transform: translateY(-4px) rotate(-0.8deg);
+}
+
+a.stamp:focus-visible {
+  outline-offset: 5px;
+}
+
+.stamp-art {
+  position: relative;
+  display: block;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: #f0f0ec;
+  border: 1px solid var(--paper-line);
+}
+
+.stamp-art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* The postmark: a ring with the country code, printed over the corner */
+.postmark {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(20, 33, 61, 0.7);
+  border-radius: 50%;
+  color: rgba(20, 33, 61, 0.8);
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 36px;
+  text-align: center;
+  transform: rotate(-14deg);
+  mix-blend-mode: multiply;
+}
+
+.stamp-name {
+  margin-top: 10px;
+  font-family: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  font-size: 1.55rem;
+  font-weight: 800;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+}
+
+.stamp-line {
+  margin-top: 2px;
+  color: var(--paper-muted);
+  font-size: 0.88rem;
+}
+
+.stamp-name + .stamp-line {
+  margin-top: 6px;
+}
+
+.stamp.skeleton {
+  min-height: 250px;
+  opacity: 0.55;
+}
+
+/* ---------- Detail (postcard) ---------- */
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 4px 0 20px;
+  color: var(--link);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.back::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-left: 2.5px solid currentColor;
+  border-bottom: 2.5px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.back:hover {
+  text-decoration: underline;
+}
+
+.postcard {
+  display: grid;
+  gap: 24px;
+  padding: 22px;
+  background: var(--paper);
+  color: var(--paper-ink);
+  border: 12px solid transparent;
+  border-image: var(--stripes) 12;
+}
+
+@media (min-width: 780px) {
+  .postcard {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: 36px;
+    padding: 32px;
+  }
+}
+
+.postcard-flag {
+  position: relative;
+  align-self: start;
+  background: #f0f0ec;
+  border: 1px solid var(--paper-line);
+}
+
+.postcard-flag img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 420px;
+  object-fit: contain;
+}
+
+.postcard-flag .postmark {
+  width: 64px;
+  height: 64px;
+  right: 12px;
+  bottom: 12px;
+  font-size: 1rem;
+  line-height: 60px;
+  border-width: 3px;
+}
+
+.postcard h2 {
+  font-family: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  font-size: clamp(2.6rem, 7vw, 3.6rem);
+  font-weight: 800;
+  line-height: 0.95;
+}
+
+.postcard h2:focus {
+  outline: none;
+}
+
+.official {
+  margin: 6px 0 18px;
+  color: var(--paper-muted);
+}
+
+.facts {
+  display: grid;
+}
+
+.fact {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid var(--paper-line);
+}
+
+.fact dt {
+  color: var(--paper-muted);
+  font-weight: 600;
+}
+
+.fact dd {
+  margin: 0;
+}
+
+.bordering {
+  margin-top: 22px;
+}
+
+.bordering h3 {
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+}
+
+.chip {
+  display: inline-block;
+  padding: 6px 14px;
+  border: 2px solid var(--paper-ink);
+  border-radius: 999px;
+  color: var(--paper-ink);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.chip:hover {
+  background: var(--paper-ink);
+  color: var(--paper);
+}
+
+.chip:focus-visible,
+.postcard :focus-visible {
+  outline-color: var(--blue);
+}
+
+.muted {
+  color: var(--paper-muted);
+}
+
+/* ---------- Footer ---------- */
+.footer {
+  margin-top: 44px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.footer a {
+  color: var(--link);
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px 12px;
+  }
+
+  .stamp {
+    padding: 14px 13px 12px;
+  }
+
+  .stamp-name {
+    font-size: 1.35rem;
+  }
+
+  .postmark {
+    width: 34px;
+    height: 34px;
+    font-size: 0.62rem;
+    line-height: 30px;
+  }
+
+  .fact {
+    grid-template-columns: 106px 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stamp {
+    transition: none;
+  }
+
+  a.stamp:hover {
+    transform: none;
+  }
+}

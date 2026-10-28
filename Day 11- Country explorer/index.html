@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Country explorer</title>
+  <meta name="description" content="Browse every country by name, region or size." />
+  <script>
+    // Set the theme before the page paints, so it doesn't flash
+    try {
+      const saved = localStorage.getItem("country-explorer-theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      document.documentElement.dataset.theme = saved || (prefersDark ? "dark" : "light");
+    } catch (error) {
+      document.documentElement.dataset.theme = "light";
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="airmail" aria-hidden="true"></div>
+
+  <div class="page">
+    <header class="top">
+      <div>
+        <h1 class="title">Country explorer</h1>
+        <p id="subtitle" class="subtitle">Browse every country by name, region or size.</p>
+      </div>
+      <button type="button" id="theme" class="theme-btn" aria-pressed="false">Dark mode</button>
+    </header>
+
+    <main>
+      <section id="list-view" aria-label="All countries">
+        <div class="controls" role="search">
+          <div class="field">
+            <label for="search">Search</label>
+            <input id="search" type="search" placeholder="Name or capital city" autocomplete="off" />
+          </div>
+          <div class="field">
+            <label for="region">Region</label>
+            <select id="region">
+              <option value="">All regions</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="sort">Sort by</label>
+            <select id="sort">
+              <option value="name">Name, A to Z</option>
+              <option value="largest">Largest area</option>
+              <option value="smallest">Smallest area</option>
+            </select>
+          </div>
+        </div>
+
+        <p id="result-count" class="result-count" aria-live="polite"></p>
+        <div id="message" class="message" role="status" hidden></div>
+        <ul id="grid" class="grid"></ul>
+      </section>
+
+      <section id="detail-view" aria-label="Country details" hidden></section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        Country data from <a href="https://github.com/mledoze/countries" target="_blank" rel="noopener noreferrer">mledoze/countries</a>
+        (ODbL). Flags from <a href="https://flagpedia.net/" target="_blank" rel="noopener noreferrer">Flagpedia</a>.
+      </p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
