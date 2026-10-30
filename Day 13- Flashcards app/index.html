@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flashcards</title>
+  <meta name="description" content="Make decks of flashcards and study them with spaced repetition." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="top">
+      <a class="brand" href="#/">Ore's Flashcards</a>
+      <p class="tagline">Cards you miss come back sooner. Cards you know come back later.</p>
+    </header>
+
+    <p id="notice" class="notice" role="alert" hidden>
+      Your browser is blocking storage, so your decks will be lost when you close this tab.
+    </p>
+
+    <main id="app"></main>
+  </div>
+
+  <div id="toast" class="toast" role="status"></div>
+  <p id="announce" class="sr-only" aria-live="polite"></p>
+  <dialog id="dialog" class="sheet"></dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
