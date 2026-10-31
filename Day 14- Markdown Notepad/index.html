@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Markdown notes</title>
+  <meta name="description" content="Write notes in Markdown and see them formatted as you type." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600&family=Source+Sans+3:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="bar">
+    <div class="bar-left">
+      <button type="button" id="notes-toggle" class="btn notes-toggle" aria-expanded="false" aria-controls="sidebar">Notes</button>
+      <h1 class="wordmark">Markdown notes</h1>
+    </div>
+    <button type="button" id="new-note" class="btn btn-primary">New note</button>
+  </header>
+
+  <div class="layout" id="layout" data-pane="write" data-notes-open="false">
+    <aside id="sidebar" class="sidebar" aria-label="Your notes">
+      <div class="search">
+        <label class="sr-only" for="search">Search notes</label>
+        <input id="search" type="search" placeholder="Search notes" autocomplete="off" />
+      </div>
+      <ul id="note-list" class="note-list"></ul>
+      <p id="no-results" class="no-results" hidden></p>
+    </aside>
+
+    <main class="work">
+      <div class="tools">
+        <p id="doc-title" class="doc-title"></p>
+        <div class="seg" role="group" aria-label="Show">
+          <button type="button" id="seg-write" aria-pressed="true">Write</button>
+          <button type="button" id="seg-preview" aria-pressed="false">Preview</button>
+        </div>
+        <div class="tool-buttons">
+          <button type="button" id="copy-html" class="btn">Copy HTML</button>
+          <button type="button" id="download" class="btn">Download</button>
+          <button type="button" id="delete" class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+
+      <div class="panes">
+        <section class="pane pane-write" aria-label="Editor">
+          <label class="sr-only" for="editor">Note text</label>
+          <div class="editor-scroll" id="editor-scroll">
+            <div class="stack">
+              <pre id="highlight" class="editor-text highlight" aria-hidden="true"></pre>
+              <textarea id="editor" class="editor-text" spellcheck="true" placeholder="Start writing. Use # for a heading and - for a list."></textarea>
+            </div>
+          </div>
+          <div class="statusbar">
+            <span id="status" role="status">Saved</span>
+            <span id="count"></span>
+          </div>
+        </section>
+
+        <section class="pane pane-preview" id="preview-pane" aria-label="Preview">
+          <article id="preview" class="page"></article>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
