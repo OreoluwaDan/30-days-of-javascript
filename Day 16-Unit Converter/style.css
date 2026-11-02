@@ -1,0 +1,456 @@
+/* ---------- Tokens ---------- */
+/* --bg, --on, --hair and --soft are set by the script for every category. */
+:root {
+  --bg: #2447f5;
+  --on: #ffffff;
+  --hair: rgba(255, 255, 255, 0.42);
+  --soft: rgba(255, 255, 255, 0.16);
+
+  --display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --pad: 28px;
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--on);
+  font: 500 1rem/1.5 var(--display);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 3px solid var(--on);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* The colour wave when you change category */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+.app {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 var(--pad) 72px;
+}
+
+/* ---------- Top bar ---------- */
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px 24px;
+  padding-top: 22px;
+}
+
+.brand {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.cats {
+  display: flex;
+  gap: 8px;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 3px;
+  scrollbar-width: none;
+}
+
+.cats::-webkit-scrollbar,
+.things::-webkit-scrollbar {
+  display: none;
+}
+
+/* ---------- Chips (used for tabs, units and real sizes) ---------- */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  flex: none;
+  min-height: 40px;
+  padding: 0 16px;
+  background: transparent;
+  border: 2px solid var(--on);
+  border-radius: 999px;
+  color: var(--on);
+  font-size: 0.95rem;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.chip:hover {
+  background: var(--soft);
+}
+
+.chip[aria-pressed="true"] {
+  background: var(--on);
+  color: var(--bg);
+}
+
+/* ---------- The big number ---------- */
+.hero {
+  padding-top: clamp(24px, 6vw, 64px);
+}
+
+.hero-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 18px;
+  border-bottom: 4px solid transparent;
+}
+
+.hero-row:focus-within {
+  border-bottom-color: var(--on);
+}
+
+.hero-input,
+.measure {
+  font-family: var(--display);
+  font-size: 176px;
+  font-stretch: 62%;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.hero-input {
+  flex: none;
+  max-width: 100%;
+  height: 1.06em;
+  padding: 0;
+  background: none;
+  border: 0;
+  caret-color: var(--on);
+  color: inherit;
+  outline: none;
+}
+
+.measure {
+  position: absolute;
+  top: 0;
+  left: -9999px;
+  visibility: hidden;
+  white-space: pre;
+}
+
+.hero-unit {
+  flex: none;
+  padding-bottom: 0.3em;
+  font-size: clamp(1.7rem, 4.4vw, 3.2rem);
+  font-stretch: 80%;
+  font-weight: 700;
+}
+
+.caption {
+  min-height: 2.8em;
+  margin: 14px 0 22px;
+  max-width: 34em;
+  font-size: clamp(1.1rem, 2.3vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+/* ---------- The ruler ---------- */
+.ruler {
+  position: relative;
+  height: 136px;
+  margin: 34px calc(var(--pad) * -1) 0;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+.ruler.is-dragging {
+  cursor: grabbing;
+}
+
+.ruler:focus-visible {
+  outline-offset: -6px;
+}
+
+.ruler canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.needle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  margin-left: -2px;
+  background: var(--on);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.needle::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
+  background: var(--on);
+  border-radius: 50%;
+}
+
+/* ---------- Controls under the ruler ---------- */
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 16px;
+}
+
+.things {
+  flex: 1;
+  flex-wrap: nowrap;
+  min-width: 0;
+  overflow-x: auto;
+  padding: 3px;
+  scrollbar-width: none;
+}
+
+.things .chip {
+  min-height: 34px;
+  padding: 0 14px;
+  border-width: 1.5px;
+  font-size: 0.88rem;
+}
+
+.zoom {
+  display: flex;
+  flex: none;
+  padding: 3px;
+  border: 2px solid var(--on);
+  border-radius: 999px;
+}
+
+.zoom button {
+  height: 28px;
+  padding: 0 12px;
+  background: none;
+  border: 0;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.zoom button[aria-pressed="true"] {
+  background: var(--on);
+  color: var(--bg);
+}
+
+/* ---------- Results: ruled rows that flip colours on hover ---------- */
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  column-gap: 28px;
+  margin-top: 40px;
+  list-style: none;
+}
+
+.tile {
+  position: relative;
+  box-shadow: inset 0 2px 0 var(--hair);
+}
+
+.tile-main {
+  display: block;
+  width: 100%;
+  padding: 16px 4px 24px;
+  background: none;
+  border: 0;
+  color: inherit;
+  text-align: left;
+  transition: background 0.15s ease, color 0.15s ease, padding 0.15s ease;
+}
+
+.tile:hover .tile-main,
+.tile-main:focus-visible {
+  padding-right: 16px;
+  padding-left: 16px;
+  background: var(--on);
+  color: var(--bg);
+}
+
+.tile-main:focus-visible {
+  outline-offset: -3px;
+}
+
+.tile-name {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.tile-val {
+  display: block;
+  margin-top: 2px;
+  font-size: clamp(2.2rem, 4vw, 3.1rem);
+  font-stretch: 62%;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  letter-spacing: -0.005em;
+  line-height: 1.1;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.tile-val sup {
+  font-size: 0.55em;
+  line-height: 0;
+}
+
+.tile-sym {
+  margin-left: 0.35em;
+  font-size: 0.42em;
+  font-stretch: 90%;
+  font-weight: 700;
+}
+
+.tile-copy {
+  position: absolute;
+  top: 12px;
+  right: 6px;
+  height: 28px;
+  padding: 0 12px;
+  background: transparent;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  color: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.tile:hover .tile-copy,
+.tile-copy:focus-visible {
+  opacity: 1;
+}
+
+.tile:hover .tile-copy {
+  color: var(--bg);
+}
+
+@media (hover: none) {
+  .tile-copy {
+    opacity: 0.9;
+  }
+}
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  z-index: 10;
+  padding: 10px 18px;
+  background: var(--on);
+  border-radius: 999px;
+  color: var(--bg);
+  font-weight: 700;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 10px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* ---------- Phones ---------- */
+@media (max-width: 600px) {
+  :root {
+    --pad: 18px;
+  }
+
+  .tiles {
+    grid-template-columns: 1fr;
+  }
+
+  .tile-main {
+    padding-bottom: 18px;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .zoom {
+    align-self: flex-start;
+  }
+
+  .caption {
+    min-height: 4.1em;
+  }
+
+  .ruler {
+    height: 120px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip,
+  .tile-main,
+  .tile-copy,
+  .toast {
+    transition: none;
+  }
+}

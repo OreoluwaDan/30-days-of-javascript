@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unit converter</title>
+  <meta name="description" content="Convert length, mass, temperature, volume and speed. Drag the ruler to change the number." />
+  <meta name="theme-color" content="#2447f5" id="theme-color" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <h1 class="brand">Unit converter</h1>
+      <nav id="cats" class="cats" aria-label="Category"></nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <label class="sr-only" for="value">Value</label>
+        <div class="hero-row">
+          <input id="value" class="hero-input" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" />
+          <span id="hero-unit" class="hero-unit"></span>
+        </div>
+        <span id="measure" class="measure" aria-hidden="true"></span>
+        <p id="caption" class="caption"></p>
+        <div id="units" class="chips" role="group" aria-label="Starting unit"></div>
+      </section>
+
+      <div id="ruler" class="ruler" role="slider" tabindex="0" aria-label="Drag to change the value. Arrow keys also work.">
+        <canvas id="canvas" aria-hidden="true"></canvas>
+        <span class="needle" aria-hidden="true"></span>
+      </div>
+
+      <div class="controls">
+        <div id="things" class="chips things" role="group" aria-label="Jump to a real size"></div>
+        <div id="zoom" class="zoom" role="group" aria-label="Ruler detail">
+          <button type="button" data-zoom="0.1" aria-pressed="false">Fine</button>
+          <button type="button" data-zoom="1" aria-pressed="true">Normal</button>
+          <button type="button" data-zoom="10" aria-pressed="false">Coarse</button>
+        </div>
+      </div>
+
+      <ul id="tiles" class="tiles" aria-label="Converted values"></ul>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
