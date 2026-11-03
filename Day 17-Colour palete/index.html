@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Palette generator</title>
+  <meta name="description" content="Press space to generate colour palettes. Lock the colours you like and copy their hex codes." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="bar">
+    <h1>Palette generator</h1>
+    <p class="hint">Press <kbd>Space</kbd> to generate</p>
+    <button type="button" id="generate" class="btn">Generate</button>
+  </header>
+
+  <main id="palette" class="palette" aria-label="Colour palette"></main>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
