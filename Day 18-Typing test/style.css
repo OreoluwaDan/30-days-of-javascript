@@ -1,0 +1,254 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #141413;
+  --panel: #1d1d1b;
+  --text: #ece8df;
+  --dim: #6f6c64;
+  --accent: #f2b84b;
+  --bad: #ef6b5b;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font: 500 1rem/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.app {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 28px 24px 64px;
+}
+
+/* ---------- Top ---------- */
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.top h1 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.modes {
+  display: flex;
+  padding: 4px;
+  background: var(--panel);
+  border-radius: 999px;
+}
+
+.modes button {
+  height: 34px;
+  padding: 0 18px;
+  background: none;
+  border: 0;
+  border-radius: 999px;
+  color: var(--dim);
+  font-weight: 600;
+}
+
+.modes button:hover {
+  color: var(--text);
+}
+
+.modes button[aria-pressed="true"] {
+  background: var(--text);
+  color: var(--bg);
+}
+
+/* ---------- The test ---------- */
+.test {
+  margin-top: clamp(32px, 9vh, 80px);
+}
+
+.live {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 20px;
+}
+
+.big {
+  display: block;
+  color: var(--accent);
+  font-size: 2.6rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.label {
+  display: block;
+  margin-top: 4px;
+  color: var(--dim);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.stage {
+  position: relative;
+  padding: 24px 28px;
+  background: var(--panel);
+  border-radius: 16px;
+  cursor: text;
+}
+
+.box {
+  position: relative;
+  height: 7.8rem; /* three lines */
+  overflow: hidden;
+}
+
+.text {
+  font: 500 1.6rem/2.6rem ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color: var(--dim);
+  word-break: break-word;
+}
+
+.text .ok {
+  color: var(--text);
+}
+
+.text .bad {
+  color: var(--bad);
+  background: rgba(239, 107, 91, 0.18);
+}
+
+.text .cur {
+  box-shadow: -2px 0 0 var(--accent);
+}
+
+.typer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: text;
+}
+
+.focus-note {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--text);
+  font-weight: 700;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.stage.is-blurred .box {
+  filter: blur(5px);
+  opacity: 0.5;
+}
+
+.stage.is-blurred .focus-note {
+  opacity: 1;
+}
+
+.hint {
+  margin-top: 18px;
+  color: var(--dim);
+  font-size: 0.9rem;
+}
+
+kbd {
+  padding: 1px 7px;
+  border: 1px solid #3a3a36;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 0.82rem;
+}
+
+/* ---------- Result ---------- */
+.result {
+  margin-top: clamp(32px, 9vh, 80px);
+}
+
+.result-wpm .big,
+.result-wpm span:first-child {
+  color: var(--accent);
+  font-size: clamp(5rem, 18vw, 9rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.result-wpm .label {
+  font-size: 1rem;
+}
+
+.result-line {
+  margin-top: 14px;
+  color: var(--dim);
+  font-size: 1.1rem;
+}
+
+.result-line strong {
+  color: var(--text);
+}
+
+.again {
+  margin-top: 32px;
+  height: 46px;
+  padding: 0 28px;
+  background: var(--text);
+  border: 0;
+  border-radius: 999px;
+  color: var(--bg);
+  font-weight: 700;
+}
+
+.again:hover {
+  background: #fff;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 600px) {
+  .stage {
+    padding: 16px 18px;
+  }
+
+  .text {
+    font-size: 1.2rem;
+    line-height: 2.1rem;
+  }
+
+  .box {
+    height: 6.3rem;
+  }
+
+  .hint kbd {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .focus-note {
+    transition: none;
+  }
+}

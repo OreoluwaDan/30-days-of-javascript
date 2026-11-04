@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Typing test</title>
+  <meta name="description" content="A typing speed test. Pick a time, start typing and see your words per minute." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <h1>Typing test</h1>
+      <div id="modes" class="modes" role="group" aria-label="Test length">
+        <button type="button" data-mode="15" aria-pressed="false">15s</button>
+        <button type="button" data-mode="30" aria-pressed="true">30s</button>
+        <button type="button" data-mode="60" aria-pressed="false">60s</button>
+      </div>
+    </header>
+
+    <section id="test" class="test">
+      <div class="live">
+        <p><span id="time" class="big">30</span><span class="label">seconds</span></p>
+        <p><span id="live-wpm" class="big">0</span><span class="label">wpm</span></p>
+      </div>
+
+      <div id="stage" class="stage is-blurred">
+        <div id="box" class="box"><p id="text" class="text"></p></div>
+        <p class="focus-note">Click here to start typing</p>
+        <input id="typer" class="typer" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Type the text shown above" />
+      </div>
+
+      <p class="hint">The timer starts when you type your first letter. <kbd>Esc</kbd> restarts.</p>
+    </section>
+
+    <section id="result" class="result" hidden>
+      <p class="result-wpm"><span id="r-wpm">0</span><span class="label">words per minute</span></p>
+      <p class="result-line">Accuracy <strong id="r-acc">100%</strong></p>
+      <p id="r-best" class="result-line"></p>
+      <button type="button" id="again" class="again">Try again</button>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
