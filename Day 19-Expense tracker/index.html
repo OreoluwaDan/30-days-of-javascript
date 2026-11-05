@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ledger - expense tracker</title>
+  <meta name="description" content="Log what you spend, see where it goes, and stay inside a monthly budget." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <h1 class="wordmark">Ledger</h1>
+      <div class="months">
+        <button type="button" id="prev" class="month-btn" aria-label="Previous month">&#8249;</button>
+        <span id="month-label" class="month-label" aria-live="polite"></span>
+        <button type="button" id="next" class="month-btn" aria-label="Next month">&#8250;</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="panel">
+        <h2 class="panel-title">Add an expense</h2>
+        <form id="form" novalidate>
+          <label class="field-label" for="amount">Amount</label>
+          <div class="money-field">
+            <span aria-hidden="true">&#8358;</span>
+            <input id="amount" inputmode="decimal" autocomplete="off" placeholder="0" />
+          </div>
+          <p id="error" class="error" role="alert"></p>
+
+          <fieldset class="cats">
+            <legend class="field-label">Category</legend>
+            <div id="cat-list" class="cat-list"></div>
+          </fieldset>
+
+          <label class="field-label" for="note">Note <span class="opt">optional</span></label>
+          <input id="note" class="text-field" maxlength="60" autocomplete="off" placeholder="What was it for?" />
+
+          <label class="field-label" for="date">Date</label>
+          <input id="date" class="text-field" type="date" />
+
+          <button type="submit" class="add">Add expense</button>
+        </form>
+      </aside>
+
+      <main class="main">
+        <section class="summary" aria-label="Summary">
+          <p class="kicker">Spent in <span id="sum-month"></span></p>
+          <p id="total" class="total">0</p>
+          <p id="meta" class="meta"></p>
+
+          <div class="budget">
+            <label for="budget">Monthly budget</label>
+            <div class="money-field small">
+              <span aria-hidden="true">&#8358;</span>
+              <input id="budget" inputmode="decimal" autocomplete="off" placeholder="Set one" />
+            </div>
+          </div>
+          <div id="meter" class="meter" hidden><span id="meter-fill"></span></div>
+          <p id="budget-note" class="meta"></p>
+        </section>
+
+        <section class="block" aria-label="By category">
+          <h2 class="block-title">By category</h2>
+          <div id="chart" class="chart"></div>
+          <p id="chart-empty" class="empty" hidden>Nothing to show yet.</p>
+        </section>
+
+        <section class="block" aria-label="Expenses">
+          <div class="block-head">
+            <h2 class="block-title">Expenses</h2>
+            <p id="filter-note" class="filter-note" hidden></p>
+          </div>
+          <ul id="list" class="list"></ul>
+          <p id="empty" class="empty" hidden></p>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
