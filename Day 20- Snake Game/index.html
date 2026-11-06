@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snake</title>
+  <meta name="description" content="Classic Snake. Arrow keys or swipe to steer." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="top">
+      <h1>Snake</h1>
+      <p class="scores">
+        <span>Score <strong id="score">0</strong></span>
+        <span>Best <strong id="best">0</strong></span>
+      </p>
+    </header>
+
+    <div class="stage">
+      <canvas id="board" width="440" height="440" aria-label="Snake game board"></canvas>
+      <div id="overlay" class="overlay" role="button" tabindex="0">
+        <p id="overlay-title" class="overlay-title"></p>
+        <p id="overlay-sub" class="overlay-sub"></p>
+      </div>
+    </div>
+
+    <p class="hint">Arrow keys or WASD to steer. Swipe on a phone. <kbd>Space</kbd> pauses.</p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
