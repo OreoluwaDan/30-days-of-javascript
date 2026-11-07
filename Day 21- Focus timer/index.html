@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#000000" />
+  <title>Pomodoro timer</title>
+  <meta name="description" content="A focus timer with a ring that drains as time runs out, and a daily study log." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1 class="sr-only">Pomodoro timer</h1>
+  <p id="sr-time" class="sr-only" role="timer" aria-live="off"></p>
+  <p id="announce" class="sr-only" role="status" aria-live="polite"></p>
+
+  <header class="bar">
+    <div class="modes" role="group" aria-label="Timer mode">
+      <button type="button" data-mode="focus" aria-pressed="true">Focus</button>
+      <button type="button" data-mode="short" aria-pressed="false">Short<span class="brk"> break</span></button>
+      <button type="button" data-mode="long" aria-pressed="false">Long<span class="brk"> break</span></button>
+    </div>
+    <button type="button" class="tally" id="tally">
+      <span class="dots" id="dots" aria-hidden="true"></span>
+      <span id="count"></span>
+    </button>
+  </header>
+
+  <main class="stage">
+    <div class="dial">
+      <svg viewBox="0 0 520 520" aria-hidden="true">
+        <defs>
+          <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="10" />
+          </filter>
+        </defs>
+        <circle class="ticks" cx="260" cy="260" r="248" pathLength="60" />
+        <circle class="track" cx="260" cy="260" r="222" />
+        <circle class="arc glow" cx="260" cy="260" r="222" pathLength="1000" filter="url(#soft)" />
+        <circle class="arc line" cx="260" cy="260" r="222" pathLength="1000" />
+      </svg>
+      <div class="readout" aria-hidden="true">
+        <p class="mode-label" id="mode-label"></p>
+        <p class="time" id="time"></p>
+        <p class="status" id="status"></p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="actions">
+    <input id="task" class="task" type="text" maxlength="50" autocomplete="off" placeholder="What are you working on?" aria-label="What are you working on?" />
+    <div class="row">
+      <button type="button" id="toggle" class="primary"><span id="toggle-label"></span><kbd>Space</kbd></button>
+      <button type="button" id="reset" class="secondary">Reset<kbd>R</kbd></button>
+      <button type="button" id="skip" class="secondary">Skip<kbd>S</kbd></button>
+      <button type="button" id="sound" class="icon" aria-label="Sound on" aria-pressed="true">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 9v6h4l5 4V5L8 9H4z" />
+          <g id="waves"><path d="M16 9a4 4 0 0 1 0 6" /><path d="M18.5 6.5a8 8 0 0 1 0 11" /></g>
+          <path id="slash" d="M17 9l5 6M22 9l-5 6" hidden />
+        </svg>
+      </button>
+    </div>
+  </footer>
+
+  <dialog id="sheet" class="sheet" aria-labelledby="sheet-title">
+    <div class="sheet-head">
+      <h2 id="sheet-title">Your progress</h2>
+      <button type="button" id="sheet-close" class="close">Close</button>
+    </div>
+
+    <h3>This week</h3>
+    <div id="week" class="week"></div>
+    <div class="stats">
+      <p class="stat"><strong id="st-sessions">0</strong><span>sessions</span></p>
+      <p class="stat"><strong id="st-time">0m</strong><span>focus time</span></p>
+      <p class="stat"><strong id="st-streak">0</strong><span>day streak</span></p>
+    </div>
+
+    <h3>Today</h3>
+    <div class="goal">
+      <p id="goal-text"></p>
+      <div class="goal-track"><span id="goal-fill"></span></div>
+    </div>
+    <ul id="today-list" class="today-list"></ul>
+    <p id="today-empty" class="muted" hidden>No focus sessions yet today. Finish one and it shows up here.</p>
+
+    <h3>Session lengths</h3>
+    <div class="lens">
+      <label>Focus<input id="len-focus" type="number" min="0.1" max="180" step="any" /></label>
+      <label>Short break<input id="len-short" type="number" min="0.1" max="180" step="any" /></label>
+      <label>Long break<input id="len-long" type="number" min="0.1" max="180" step="any" /></label>
+    </div>
+    <p class="muted">In minutes. A new length starts with your next session.</p>
+
+    <h3>Preferences</h3>
+    <label class="field">Daily goal, in sessions<input id="goal" type="number" min="1" max="50" step="1" /></label>
+    <label class="check"><input id="auto" type="checkbox" />Start the next session automatically</label>
+
+    <button type="button" id="clear" class="link">Clear all history</button>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
