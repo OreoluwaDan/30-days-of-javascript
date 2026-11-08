@@ -1,0 +1,365 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #eef1f5;
+  --ink: #1a2233;
+  --muted: #667085;
+  --line: #c3ccd9;
+  --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --sans: "Instrument Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font: 500 1rem/1.5 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.app {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 56px 24px 96px;
+}
+
+/* ---------- The top ---------- */
+.date {
+  font: 400 clamp(2.8rem, 8.5vw, 5.4rem) / 1 var(--serif);
+  letter-spacing: -0.01em;
+}
+
+.summary {
+  margin-top: 14px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* ---------- One habit ---------- */
+.list {
+  margin-top: 36px;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.habit {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: start;
+  padding: 34px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.habit-head {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.habit-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.remove {
+  flex: none;
+  background: none;
+  border: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-decoration: underline;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.habit:hover .remove,
+.remove:focus-visible {
+  opacity: 1;
+}
+
+/* ---------- The chain of days ---------- */
+.chain {
+  --gap: 10px;
+  display: flex;
+  gap: var(--gap);
+  margin-top: 22px;
+}
+
+.day {
+  position: relative;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 40px;
+}
+
+/* the bar that joins two days done in a row */
+.day.link::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: calc(var(--gap) * -1 - 1px);
+  width: calc(var(--gap) + 2px);
+  height: 12px;
+  background: var(--c);
+}
+
+.dot {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 2px solid var(--line);
+  border-radius: 50%;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.dot:hover {
+  border-color: var(--c);
+}
+
+.day.today .dot {
+  border-color: var(--ink);
+}
+
+.dot[aria-pressed="true"] {
+  background: var(--c);
+  border-color: var(--c);
+}
+
+/* the tick */
+.dot[aria-pressed="true"]::after {
+  content: "";
+  width: 9px;
+  height: 17px;
+  margin-top: -3px;
+  border: solid #fff;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+.dot.pop {
+  animation: pop 0.32s ease;
+}
+
+@keyframes pop {
+  40% {
+    transform: scale(1.28);
+  }
+}
+
+.day-name {
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 600;
+}
+
+.day.today .day-name {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* ---------- The streak ---------- */
+.streak {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 150px;
+  text-align: right;
+}
+
+.streak-num {
+  color: var(--c);
+  font: 400 clamp(3.6rem, 7vw, 5.4rem) / 0.9 var(--serif);
+}
+
+.streak-num.zero {
+  color: #b2bccb;
+}
+
+.streak-cap {
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+.streak-note,
+.streak-best {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* ---------- Adding a habit ---------- */
+.empty {
+  padding: 34px 0;
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+.add {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 44px;
+}
+
+.add input {
+  flex: 1 1 260px;
+  height: 56px;
+  padding: 0 2px;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid var(--ink);
+  font-size: 1.2rem;
+  font-weight: 600;
+  outline: none;
+}
+
+.add input::placeholder {
+  color: #7d8799;
+  font-weight: 500;
+}
+
+.add input:focus {
+  box-shadow: 0 2px 0 var(--ink);
+}
+
+.add button {
+  height: 56px;
+  padding: 0 30px;
+  background: var(--ink);
+  border: 0;
+  border-radius: 999px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.add button:hover {
+  background: #2c3650;
+}
+
+.note {
+  min-height: 1.5em;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* ---------- Phones: seven days, streak underneath ---------- */
+@media (max-width: 700px) {
+  .app {
+    padding: 36px 18px 72px;
+  }
+
+  .habit {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .chain {
+    --gap: 8px;
+  }
+
+  .day {
+    width: 38px;
+  }
+
+  .dot {
+    width: 38px;
+    height: 38px;
+  }
+
+  .day.link::before {
+    top: 13px;
+  }
+
+  .day:nth-child(-n + 7) {
+    display: none;
+  }
+
+  .day:nth-child(8).link::before {
+    display: none;
+  }
+
+  .streak {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 12px;
+    min-width: 0;
+    text-align: left;
+  }
+
+  .streak-num {
+    font-size: 3.6rem;
+  }
+
+  .streak-cap {
+    margin: 0;
+  }
+
+  .streak-note,
+  .streak-best {
+    flex-basis: 100%;
+    margin: 0;
+  }
+}
+
+@media (hover: none) {
+  .remove {
+    opacity: 0.8;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot,
+  .remove {
+    transition: none;
+  }
+
+  .dot.pop {
+    animation: none;
+  }
+}
