@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f6f2">
+  <title>Decide — Let the wheel decide</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <main class="app">
+    <header class="topbar">
+      <a href="#" class="brand">
+        <span class="brand-mark">d.</span>
+        <span>Decision wheel</span>
+      </a>
+
+      <span class="header-note">A little help deciding.</span>
+    </header>
+
+    <section class="workspace">
+
+      <aside class="editor">
+        <div class="section-heading">
+          <p class="eyebrow">YOUR WHEEL</p>
+          <h1>What are we<br>deciding today?</h1>
+          <p class="intro">
+            Add your options. Give the wheel a spin.
+            Let chance make the call.
+          </p>
+        </div>
+
+        <div class="options-header">
+          <label for="optionInput">Your options</label>
+          <span id="optionCount">6 options</span>
+        </div>
+
+        <form id="optionForm" class="add-form">
+          <input
+            type="text"
+            id="optionInput"
+            placeholder="Type something..."
+            maxlength="32"
+            autocomplete="off"
+          >
+          <button type="submit" class="add-button" aria-label="Add option">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 5v14M5 12h14" stroke="currentColor"
+                stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </form>
+
+        <div id="optionList" class="option-list"></div>
+
+        <div class="editor-footer">
+          <button id="shuffleButton" class="text-button">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M16 3h5v5M4 20l17-17M21 16v5h-5M15 15l6 6M4 4l5 5"
+                stroke="currentColor" stroke-width="1.6"
+                stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Shuffle options
+          </button>
+
+          <button id="resetButton" class="text-button muted">
+            Reset
+          </button>
+        </div>
+      </aside>
+
+      <section class="wheel-section">
+        <div class="wheel-top">
+          <div>
+            <p class="eyebrow">THE DECISION</p>
+            <h2>Let's see where it lands.</h2>
+          </div>
+          <span class="live-indicator">
+            <span></span> Ready
+          </span>
+        </div>
+
+        <div class="wheel-stage">
+          <div class="wheel-wrap">
+            <div class="pointer">
+              <svg viewBox="0 0 40 52">
+                <path d="M20 49C17 49 15 46 13 43L2 10C0 4 5 0 11 0H29C35 0 40 4 38 10L27 43C25 46 23 49 20 49Z"
+                  fill="#29251f"/>
+                <path d="M20 7a7 7 0 1 0 0 14a7 7 0 0 0 0-14Z"
+                  fill="#f5a23b"/>
+              </svg>
+            </div>
+
+            <canvas id="wheelCanvas" aria-label="Random decision wheel"></canvas>
+
+            <button id="spinButton" class="spin-button">
+              <span>SPIN</span>
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14m-6-6 6 6-6 6"
+                  stroke="currentColor" stroke-width="1.7"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="wheel-bottom">
+          <div id="resultArea" class="result-area" aria-live="polite">
+            <span class="result-label">THE RESULT</span>
+            <span id="resultText" class="result-text">
+              Your answer will appear here.
+            </span>
+          </div>
+
+          <p class="wheel-hint">No overthinking. Just spin.</p>
+        </div>
+      </section>
+
+    </section>
+
+    <footer class="footer">
+      <span>Make a choice. Move on.</span>
+      <span>DECIDE © 2026</span>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
