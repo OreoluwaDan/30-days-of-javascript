@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#EDEEF4">
+  <meta name="description" content="Look up any GitHub user and see their profile and latest repositories.">
+  <title>Handle, GitHub profile finder</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%232C3BEA'/%3E%3Ctext x='16' y='23' font-size='20' font-weight='700' text-anchor='middle' fill='white' font-family='Arial,sans-serif'%3Eh%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="desk">
+    <header class="top">
+      <h1 class="mark">handle</h1>
+      <p>GitHub profile finder</p>
+    </header>
+
+    <form class="search" id="form" role="search" novalidate>
+      <label class="sr-only" for="q">GitHub username</label>
+      <div class="url">
+        <span class="prefix" aria-hidden="true">github.com/</span>
+        <input id="q" name="q" type="text" placeholder="username"
+               autocomplete="off" autocapitalize="none" autocorrect="off"
+               spellcheck="false" enterkeyhint="search" maxlength="80">
+      </div>
+      <div class="actions">
+        <button class="go" id="go" type="submit">Look up</button>
+        <div class="chips" id="recent" hidden></div>
+      </div>
+    </form>
+
+    <section class="result" id="result" aria-live="polite" aria-busy="false"></section>
+
+    <footer class="page-foot">
+      <p>Data from the public GitHub API. Day 27 of 30 Days of JS.</p>
+    </footer>
+  </main>
+
+  <noscript><p class="noscript">This page needs JavaScript to talk to GitHub.</p></noscript>
+  <script src="script.js"></script>
+</body>
+</html>
