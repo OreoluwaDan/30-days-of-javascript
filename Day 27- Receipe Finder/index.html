@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Discover delicious recipes from Nigeria and around the world with Gather.">
+  <title>Gather — Find Your Next Favourite Meal</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header class="navbar">
+    <a href="#" class="logo">gather<span>.</span></a>
+
+    <nav class="nav-links">
+      <a href="#discover" class="active">Discover</a>
+      <a href="#recipes">All recipes</a>
+      <button id="collectionLink" class="nav-button">
+        My collection <span id="navFavouriteCount">0</span>
+      </button>
+    </nav>
+
+    <button class="mobile-menu" id="mobileMenu" aria-label="Toggle navigation">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </header>
+
+  <main>
+    <section class="hero" id="discover">
+      <div class="hero-content">
+        <p class="eyebrow">GOOD FOOD, GOOD COMPANY</p>
+        <h1>Find something<br><em>wonderful</em> to cook.</h1>
+        <p class="hero-description">
+          From Nigerian favourites to dishes from around the world,
+          find your next meal right here.
+        </p>
+
+        <form class="search-form" id="searchForm">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input
+            type="search"
+            id="searchInput"
+            placeholder="Search for a recipe or ingredient..."
+            aria-label="Search recipes"
+          >
+          <button type="submit">Search</button>
+        </form>
+
+        <div class="hero-note">
+          <i class="fa-solid fa-utensils"></i>
+          <span>Discover recipes worth sharing.</span>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <img
+          src="https://images.unsplash.com/photo-1547592180-85f173990554?w=1000"
+          alt="A beautifully prepared meal"
+        >
+        <div class="image-label">
+          <span>Made with love</span>
+          <i class="fa-solid fa-heart"></i>
+        </div>
+      </div>
+    </section>
+
+    <section class="featured-section">
+      <div class="featured-copy">
+        <p class="eyebrow">A TASTE OF HOME</p>
+        <h2>Good food brings<br>us together.</h2>
+        <p>
+          Explore familiar Nigerian dishes and discover something
+          new to put on your table.
+        </p>
+        <button class="text-button" id="exploreNigerian">
+          Explore Nigerian dishes <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <div class="featured-image">
+        <img
+          src="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=900"
+          alt="A delicious rice dish"
+        >
+      </div>
+    </section>
+
+    <section class="recipes-section" id="recipes">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">THE RECIPE COLLECTION</p>
+          <h2 id="sectionTitle">Explore recipes</h2>
+          <p id="sectionDescription">A little inspiration for your next meal.</p>
+        </div>
+
+        <button class="clear-filter" id="clearFilter">Show all recipes</button>
+      </div>
+
+      <div class="category-list" id="categoryList">
+        <button class="category-btn active" data-category="All">All recipes</button>
+        <button class="category-btn" data-category="Nigerian">Nigerian</button>
+        <button class="category-btn" data-category="Chicken">Chicken</button>
+        <button class="category-btn" data-category="Seafood">Seafood</button>
+        <button class="category-btn" data-category="Vegetarian">Vegetarian</button>
+        <button class="category-btn" data-category="Pasta">Pasta</button>
+        <button class="category-btn" data-category="Dessert">Dessert</button>
+      </div>
+
+      <div class="results-info">
+        <p id="resultsCount">Discover something delicious.</p>
+        <span id="loadingText"></span>
+      </div>
+
+      <div class="recipe-grid" id="recipeGrid">
+        <div class="loading-state">
+          <i class="fa-solid fa-spinner fa-spin"></i>
+          <p>Preparing your recipe collection...</p>
+        </div>
+      </div>
+
+      <p class="empty-state" id="emptyState" hidden>
+        No recipes found. Try another search.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <a href="#" class="logo">gather<span>.</span></a>
+    <p>Good food. Great moments. Always.</p>
+    <span>© 2026 Gather</span>
+  </footer>
+
+  <!-- Recipe details modal -->
+  <div class="modal-overlay" id="recipeModal" aria-hidden="true">
+    <div class="recipe-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="closeModal" aria-label="Close recipe">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="modal-image">
+        <img id="modalImage" src="" alt="">
+      </div>
+
+      <div class="modal-content">
+        <p class="eyebrow" id="modalCategory">RECIPE</p>
+        <h2 id="modalTitle">Recipe name</h2>
+
+        <div class="modal-actions">
+          <button id="modalFavourite" class="modal-favourite">
+            <i class="fa-regular fa-heart"></i> Save recipe
+          </button>
+          <a id="youtubeLink" href="#" target="_blank" rel="noopener noreferrer" hidden>
+            <i class="fa-brands fa-youtube"></i> Watch tutorial
+          </a>
+        </div>
+
+        <div class="modal-divider"></div>
+
+        <h3>Ingredients</h3>
+        <ul id="ingredientsList" class="ingredients-list"></ul>
+
+        <div class="modal-divider"></div>
+
+        <h3>How to prepare</h3>
+        <div id="instructions" class="instructions"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
