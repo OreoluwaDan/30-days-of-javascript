@@ -1,0 +1,192 @@
+:root {
+  --bg: #F7E7E3;
+  --ink: #2A1115;
+  --muted: #7A5A5C;
+  --line: #DDBFBB;
+  --accent: #B3202E;
+  --font: "Red Hat Display", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input { font: inherit; color: inherit; }
+
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+.page {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: clamp(32px, 7vw, 88px) clamp(20px, 5vw, 48px) 72px;
+}
+
+/* ---------- The clock ---------- */
+
+.name {
+  margin: 0;
+  font-size: clamp(1.875rem, 5.5vw, 3.25rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  overflow-wrap: anywhere;
+}
+
+.when { margin: 8px 0 0; color: var(--muted); }
+
+.clock {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0 clamp(16px, 3vw, 32px);
+  margin-top: clamp(40px, 9vw, 96px);
+}
+
+.unit {
+  display: flex;
+  flex-direction: column;
+  padding-top: 12px;
+  border-top: 3px solid var(--ink);
+}
+
+.num {
+  font-size: clamp(3rem, 10vw, 7.5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.lab { margin-top: 10px; color: var(--muted); }
+
+@media (max-width: 640px) {
+  .clock { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 32px; }
+  .num { font-size: clamp(3.5rem, 19vw, 6rem); }
+}
+
+.track {
+  height: 6px;
+  margin-top: clamp(32px, 6vw, 56px);
+  background: var(--line);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.fill { height: 100%; width: 0; background: var(--accent); }
+
+.note { margin: 12px 0 0; min-height: 1.5em; color: var(--muted); }
+
+/* ---------- Form ---------- */
+
+.set, .saved { margin-top: clamp(56px, 10vw, 104px); }
+
+h2 {
+  margin: 0 0 20px;
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 24px;
+  align-items: end;
+}
+
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field--wide { grid-column: 1 / -1; }
+
+label { font-size: 0.9375rem; font-weight: 500; color: var(--muted); }
+
+input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 0 4px;
+  border: 0;
+  border-bottom: 2px solid var(--ink);
+  border-radius: 0;
+  background: transparent;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+input::placeholder { color: var(--muted); opacity: 0.55; }
+input:focus-visible { outline-offset: 6px; }
+
+.go {
+  grid-column: 1 / -1;
+  min-height: 52px;
+  padding: 0 28px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--ink);
+  color: var(--bg);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.go:hover { background: #46202A; }
+
+.error { grid-column: 1 / -1; margin: 0; min-height: 1.5em; color: var(--accent); font-weight: 600; }
+
+@media (min-width: 720px) {
+  form { grid-template-columns: 2fr 1fr 1fr auto; }
+  .field--wide { grid-column: auto; }
+  .go { grid-column: auto; }
+}
+
+/* ---------- Saved list ---------- */
+
+.list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+
+.list li {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+}
+
+.pick {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2px 16px;
+  min-height: 56px;
+  padding: 10px 4px;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.pick:hover .pick-name { text-decoration: underline; text-underline-offset: 4px; }
+.pick-name { font-weight: 700; overflow-wrap: anywhere; }
+.pick-date { color: var(--muted); }
+.pick[aria-current="true"] .pick-name::after { content: " (showing)"; font-weight: 400; color: var(--muted); }
+
+.del {
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.del:hover:not(:disabled) { color: var(--accent); }
+.del:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.noscript { margin: 0; padding: 16px; text-align: center; background: #fff; color: var(--accent); }
