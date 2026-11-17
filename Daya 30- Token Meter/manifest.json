@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "Token Meter",
+  "version": "2.0",
+  "description": "Estimates the tokens used by each Claude reply and keeps a running total until you reset it.",
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["https://claude.ai/*"],
+      "js": ["content.js"],
+      "css": ["badge.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}
